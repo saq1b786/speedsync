@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpeedSync - Runner Registration</title>
+  <link rel="stylesheet" href="assets/css/index.css">
+  <link rel="icon" href="assets/img/runner icon.jpg" type="image/x-icon">
+</head>
+<body>
+  <div class="homePage">
+    <!-- Dark Mode Toggle -->
+    <button id="dark-mode" class="dark-mode-toggle" aria-label="Toggle dark mode">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <path fill="currentColor" d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1-8.313-12.454z"/>
+        </svg>
+
+
+    </button>
+
+    <h1 class="main_header">SpeedSync</h1>
+
+    <!-- Runner ID Input -->
+    <div class="input-group">
+      <label for="runnerID" class="input-label">Runner Bib Number</label>
+      <input 
+        id="runnerID" 
+        type="number" 
+        min="1" 
+        placeholder="e.g. 42" 
+        class="runner-input"
+      >
+      <button id="saveRunnerBtn">Save Runner</button>
+      <div id="saveStatus" class="save-status"></div>
+    </div>
+
+    <!-- Registered Runners List -->
+    <div class="saved-runners">
+      <h3>Registered Runners</h3>
+      <div id="runnersList" class="runners-list"></div>
+    </div>
+
+    <!-- Start Timer Button -->
+    <button id="startTimerBtn" class="timer-btn">
+      <img src="assets/img/timer.svg" alt="Timer icon">
+      <span class="button-label">Start Race Timer</span>
+    </button>
+
+    <!-- Status Indicator -->
+    <div id="connection-status" class="status-offline">
+      <span class="status-icon"></span>
+      <span class="status-text">Offline - Working locally</span>
+    </div>
+  </div>
+
+  <script src="js/index.js"></script>
+</body>
+</html>

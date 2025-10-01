@@ -1,0 +1,298 @@
+/*  BASE STYLES  */
+:root {
+  --base-font-size: 16px;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f9fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 1.25rem;
+  font-size: var(--base-font-size);
+}
+
+.results-page {
+  width: 100%;
+  max-width: 50rem;
+  background-color: white;
+  border-radius: 1.25rem;
+  box-shadow: 0 0.25rem 1.25rem rgba(0, 0, 0, 0.1);
+  padding: 1.875rem;
+  position: relative;
+  margin: 3.125rem 0;
+}
+
+/*  HEADER  */
+.main-header {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 1.5625rem;
+  margin-top: 0.625rem;
+}
+
+/*  RESULTS CONTROLS */
+.results-controls {
+  display: flex;
+  gap: 0.9375rem;
+  justify-content: center;
+  margin-bottom: 1.5625rem;
+  flex-wrap: wrap;
+}
+
+.control-btn {
+  padding: 0.75rem 1.25rem;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 0.625rem;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  min-width: 8rem;
+}
+
+.control-btn:hover {
+  background: #0056b3;
+  transform: translateY(-0.125rem);
+}
+
+.control-btn svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* RESULTS TABLE */
+.results-table {
+  border: 0.0625rem solid #eee;
+  border-radius: 0.625rem;
+  overflow: hidden;
+}
+
+.table-header,
+.result-row {
+  display: grid;
+  grid-template-columns: 5rem 1fr 1fr;
+  padding: 0.9375rem 1.25rem;
+}
+
+.table-header {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #495057;
+}
+
+.table-body {
+  max-height: 31.25rem;
+  overflow-y: auto;
+}
+
+.result-row {
+  align-items: center;
+  border-bottom: 0.0625rem solid #eee;
+}
+
+.result-row:last-child {
+  border-bottom: none;
+}
+
+.result-row:hover {
+  background-color: #f8f9fa;
+}
+
+.position {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.bib-number {
+  font-family: monospace;
+  font-size: 1.1rem;
+}
+
+.time {
+  font-family: monospace;
+  font-weight: 600;
+  text-align: right;
+}
+
+.no-results {
+  padding: 1.875rem;
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+  grid-column: 1 / -1;
+}
+
+/* STATUS INDICATOR */
+.status-indicator {
+  padding: 0.625rem;
+  border-radius: 1.25rem;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.status-offline {
+  background-color: #ffe8e8;
+  color: #dc3545;
+}
+
+.status-online {
+  background-color: #e8ffe8;
+  color: #28a745;
+}
+
+.status-icon {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-offline .status-icon {
+  background-color: #dc3545;
+}
+
+.status-online .status-icon {
+  background-color: #28a745;
+}
+
+/* BUTTON CONTROLS */
+.dark-mode-toggle,
+#backButton {
+  position: fixed;
+  top: 1.25rem;
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  z-index: 100;
+  transition: all 0.3s ease;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dark-mode-toggle {
+  right: 1.25rem;
+}
+
+#backButton {
+  left: 1.25rem;
+}
+
+.dark-mode-toggle:hover,
+#backButton:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode-toggle svg,
+#backButton svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: #333;
+  transition: fill 0.3s ease;
+}
+
+/* DARK THEME */
+.dark-theme {
+  background-color: #1a1a1a;
+  color: white;
+}
+
+.dark-theme .results-page {
+  background-color: #2d2d2d;
+}
+
+.dark-theme .main-header,
+.dark-theme .position {
+  color: white;
+}
+
+.dark-theme .results-table {
+  border-color: #444;
+}
+
+.dark-theme .table-header {
+  background-color: #333;
+  color: #ddd;
+}
+
+.dark-theme .result-row:hover {
+  background-color: #333;
+}
+
+.dark-theme .dark-mode-toggle:hover,
+.dark-theme #backButton:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark-theme .dark-mode-toggle svg,
+.dark-theme #backButton svg {
+  fill: white;
+}
+
+/* RESPONSIVE ADJUSTMENTS */
+@media (max-width: 48rem) {
+  .results-page {
+    padding: 1.25rem;
+    margin: 1.25rem 0;
+    border-radius: 0.75rem;
+  }
+
+  .main-header {
+    font-size: 2rem;
+    margin-top: 3.125rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .results-controls {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .control-btn {
+    width: 100%;
+    max-width: 18.75rem;
+  }
+
+  .table-header,
+  .result-row {
+    grid-template-columns: 3.75rem 1fr 1fr;
+    padding: 0.75rem 0.9375rem;
+  }
+}
+
+@media (max-width: 30rem) {
+  body {
+    padding: 0.625rem;
+  }
+
+  .results-page {
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .main-header {
+    font-size: 1.75rem;
+  }
+
+  .bib-number,
+  .time {
+    font-size: 0.9rem;
+  }
+}

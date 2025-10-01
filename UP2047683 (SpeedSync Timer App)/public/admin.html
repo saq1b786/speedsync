@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Results</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 1.25rem;
+      background-color: #f5f5f5;
+      color: #222;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+  
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+  
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.25rem 0;
+    }
+  
+    li {
+      display: grid;
+      grid-template-columns: 3.125rem 6.25rem 1fr 6.25rem;
+      gap: 0.625rem;
+      padding: 0.5rem 0;
+      align-items: center;
+      border-bottom: 0.0625rem solid #ccc;
+    }
+  
+    small {
+      color: #666;
+      font-size: 0.8rem;
+    }
+  
+    .error {
+      color: #ff4444;
+      font-weight: bold;
+    }
+  
+    .delete-btn {
+      background: #ff4444;
+      color: white;
+      border: none;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: background 0.2s;
+      width: 100%;
+      white-space: nowrap;
+    }
+  
+    .delete-btn:hover {
+      background: #cc0000;
+    }
+  
+    .delete-btn:disabled {
+      background: #cccccc;
+      cursor: not-allowed;
+    }
+  
+    #deleteAllBtn {
+      background: #ff4444;
+      color: white;
+      border: none;
+      padding: 0.3125rem 0.625rem;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.2s;
+      margin-top: 0.625rem;
+    }
+  
+    #deleteAllBtn:hover {
+      background: #cc0000;
+    }
+  
+    #deleteAllBtn:disabled {
+      background: #cccccc;
+      cursor: not-allowed;
+    }
+  
+    /* Responsive adjustments */
+    @media (max-width: 48rem) {
+      body {
+        padding: 0.625rem;
+      }
+  
+      li {
+        grid-template-columns: 2.5rem 1fr auto;
+        grid-template-areas: 
+          "position name delete"
+          "time time time";
+        gap: 0.5rem;
+        padding: 0.75rem 0;
+      }
+  
+      li > *:nth-child(1) { grid-area: position; }
+      li > *:nth-child(2) { grid-area: name; }
+      li > *:nth-child(3) { grid-area: time; }
+      li > *:nth-child(4) { grid-area: delete; }
+    }
+  
+    @media (max-width: 30rem) {
+      h1 {
+        font-size: 1.25rem;
+      }
+  
+      li {
+        font-size: 1rem;
+      }
+  
+      small {
+        font-size: 0.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Race Results (Admin Only)</h1>
+  <button onclick="promptForAccess()">View Results</button>
+  
+
+  <button id="deleteAllBtn" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #ff4444; color: white; border: none; border-radius: 4px; cursor: pointer;">
+    Delete All Results
+  </button>
+  <ul id="resultsList"></ul>
+
+  <script>
+    const adminPassword = 'pub2pub2025'; // if admin wants a different password you can delete it here
+    const resultsList = document.querySelector('#resultsList');
+  
+    function promptForAccess() {
+      const password = prompt("Enter admin password:");
+      if (password === adminPassword) {
+        loadResults();
+      } else {
+        alert("Access denied");
+      }
+    }
+  
+    async function loadResults() {
+      try {
+        const response = await fetch('/api/admin/results');
+        const result = await response.json();
+        
+        if (!result.success) {
+          throw new Error(result.error || 'Failed to load results');
+        }
+  
+        displayResults(result.data);
+      } catch (error) {
+        console.error('Error:', error);
+        resultsList.innerHTML = `<li class="error">${error.message}</li>`;
+      }
+    }
+  
+    function displayResults(results) {
+      resultsList.innerHTML = '';
+      
+      if (!results.length) {
+        resultsList.innerHTML = '<li>No results found</li>';
+        return;
+      }
+  
+      results.forEach(result => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <span>#${result.runnerNumber}</span>
+          <span>${formatTime(result.finishTime)}</span>
+          <small>${new Date(result.recordedAt).toLocaleString()}</small>
+          <button class="delete-btn" data-id="${result.id}">Delete</button>
+        `;
+        resultsList.appendChild(li);
+      });
+  
+      document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', handleDelete);
+      });
+    }
+  
+    async function handleDelete(event) {
+      const button = event.currentTarget;
+      const resultId = button.getAttribute('data-id');
+      
+      if (!confirm('Permanently delete this result?')) return;
+      
+      button.disabled = true;
+      button.textContent = 'Deleting...';
+  
+      try {
+        const response = await fetch(`/api/results/${resultId}`, {
+          method: 'DELETE'
+        });
+        
+        const result = await response.json();
+        
+        if (!result.success) {
+          throw new Error(result.error || 'Delete failed');
+        }
+        
+        loadResults();
+      } catch (error) {
+        console.error('Delete error:', error);
+        button.textContent = 'Error!';
+        setTimeout(() => {
+          button.textContent = 'Delete';
+          button.disabled = false;
+        }, 2000);
+      }
+    }
+
+    
+document.querySelector('#deleteAllBtn').addEventListener('click', async function() {
+  if (!confirm('WARNING: This will delete ALL results permanently from the database. Continue?')) {
+    return;
+  }
+
+  const button = this;
+  button.disabled = true;
+  button.textContent = 'Deleting...';
+  button.style.backgroundColor = '#cc0000';
+
+  try {
+    const response = await fetch('/results', {
+      method: 'DELETE'
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to delete all results');
+    }
+    
+    // Clear the displayed results
+    resultsList.innerHTML = '<li>All results deleted</li>';
+    alert('All results deleted successfully');
+    
+  } catch (error) {
+    console.error('Delete all error:', error);
+    alert('Error deleting all results: ' + error.message);
+  } finally {
+    button.disabled = false;
+    button.textContent = 'Delete All Results';
+    button.style.backgroundColor = '#ff4444';
+  }
+});
+  
+    function formatTime(ms) {
+      const date = new Date(ms);
+      return [
+        date.getUTCHours().toString().padStart(2, '0'),
+        date.getUTCMinutes().toString().padStart(2, '0'),
+        date.getUTCSeconds().toString().padStart(2, '0')
+      ].join(':');
+    }
+  </script>
+</body>
+</html>

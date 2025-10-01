@@ -1,0 +1,371 @@
+/*  BASE STYLES */
+:root {
+  --base-font-size: 16px;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 1.25rem;
+  font-size: var(--base-font-size);
+}
+
+.timerPage {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 31.25rem;
+  padding: 1.875rem;
+  background-color: white;
+  border-radius: 1.25rem;
+  box-shadow: 0 0.25rem 1.25rem rgba(0, 0, 0, 0.1);
+  margin: 3.125rem 0;
+}
+
+/*  BUTTON CONTROLS  */
+.dark-mode-toggle,
+#backButton {
+  position: fixed;
+  top: 1.25rem;
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  z-index: 100;
+  transition: all 0.3s ease;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dark-mode-toggle {
+  right: 1.25rem;
+}
+
+#backButton {
+  left: 1.25rem;
+}
+
+.dark-mode-toggle:hover,
+#backButton:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode-toggle svg,
+#backButton svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: #333;
+  transition: fill 0.3s ease;
+}
+
+/*  HEADER  */
+.main_header {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 0.625rem;
+  margin-top: 0.625rem;
+}
+
+/*  TIMER DISPLAY */
+#container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.875rem;
+  border: 0.3125rem solid #007bff;
+  border-radius: 3.125rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#display {
+  font-size: 5rem;
+  font-family: monospace;
+  font-weight: bold;
+  color: #333;
+  text-shadow: 0.125rem 0.125rem 0.125rem rgba(0,0,0,0.1);
+  margin-bottom: 1.5625rem;
+}
+
+/* RUNNER SELECTION */
+.runner-selection {
+  width: 100%;
+  max-width: 18.75rem;
+}
+
+#runner-dropdown {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1.2rem;
+  border: 0.125rem solid #ccc;
+  border-radius: 0.625rem;
+  box-sizing: border-box;
+}
+
+/* CONTROL BUTTONS */
+#controls {
+  display: flex;
+  gap: 0.9375rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.control-btn {
+  padding: 1.125rem;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 0.9375rem;
+  cursor: pointer;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  min-width: 6.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+#startbtn {
+  background: #28a745;
+  color: white;
+}
+
+#recordbtn {
+  background: #ffc107;
+  color: #212529;
+}
+
+#resetbtn {
+  background: #dc3545;
+  color: white;
+}
+
+#resultsBtn {
+  background: #6f42c1;
+  color: white;
+}
+
+.control-btn:hover:not(:disabled) {
+  transform: scale(1.05);
+}
+
+.control-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+#resultsBtn:hover {
+  background: #5a32a3;
+}
+
+/* RECORDED TIMES */
+.records-section {
+  width: 100%;
+  max-width: 25rem;
+}
+
+.records-section h3 {
+  color: #495057;
+  margin-bottom: 0.9375rem;
+}
+
+#recordTimes {
+  max-height: 18.75rem;
+  overflow-y: auto;
+  border: 0.0625rem solid #eee;
+  border-radius: 0.625rem;
+  padding: 0.9375rem;
+}
+
+.record-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  background: #f8f9fa;
+  border-radius: 0.625rem;
+  transition: all 0.2s;
+}
+
+.record-item:hover {
+  transform: translateY(-0.125rem);
+  box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.1);
+}
+
+.runner-id {
+  font-weight: 600;
+  color: #007bff;
+  font-size: 1.1rem;
+}
+
+.record-time {
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.no-records {
+  color: #6c757d;
+  font-style: italic;
+}
+
+/* STATUS INDICATOR */
+.status-indicator {
+  padding: 0.625rem;
+  border-radius: 1.25rem;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-offline {
+  background-color: #ffe8e8;
+  color: #dc3545;
+}
+
+.status-online {
+  background-color: #e8ffe8;
+  color: #28a745;
+}
+
+.status-icon {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-offline .status-icon {
+  background-color: #dc3545;
+}
+
+.status-online .status-icon {
+  background-color: #28a745;
+}
+
+/*  DARK THEME */
+.dark-theme {
+  background-color: #1a1a1a;
+  color: white;
+}
+
+.dark-theme .timerPage {
+  background-color: #2d2d2d;
+}
+
+.dark-theme .main_header {
+  color: white;
+}
+
+.dark-theme #display {
+  color: white;
+}
+
+.dark-theme #runner-dropdown {
+  background-color: #333;
+  color: white;
+  border-color: #555;
+}
+
+.dark-theme .record-item {
+  background-color: #333;
+  color: white;
+}
+
+.dark-theme .runner-id {
+  color: #4dabf7;
+}
+
+.dark-theme .records-section h3 {
+  color: #ddd;
+}
+
+.dark-theme .dark-mode-toggle:hover,
+.dark-theme #backButton:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark-theme .dark-mode-toggle svg,
+.dark-theme #backButton svg {
+  fill: white;
+}
+
+/* ACCESSIBILITY */
+.sr-only {
+  position: absolute;
+  width: 0.0625rem;
+  height: 0.0625rem;
+  margin: -0.0625rem;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* RESPONSIVE ADJUSTMENTS */
+@media (max-width: 31.25rem) {
+  .timerPage {
+    padding: 1.25rem;
+    margin: 1.25rem 0;
+    border-radius: 0.75rem;
+  }
+
+  #display {
+    font-size: 3.5rem;
+  }
+  
+  .control-btn {
+    padding: 0.875rem;
+    font-size: 1rem;
+    min-width: 5rem;
+  }
+
+  #container {
+    padding: 1.25rem;
+    border-width: 0.25rem;
+    border-radius: 2.5rem;
+  }
+
+  .main_header {
+    font-size: 2rem;
+    margin-top: 3.125rem;
+  }
+}
+
+@media (max-width: 25rem) {
+  body {
+    padding: 0.625rem;
+  }
+
+  .timerPage {
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  #controls {
+    gap: 0.5rem;
+  }
+
+  .runner-id,
+  .record-time {
+    font-size: 1rem;
+  }
+}
